@@ -9,8 +9,9 @@ module.exports = router;
 //Post Method
 router.post('/post', (req, res) => {
   const data = new Model({
-    name: req.body.name,
-    age: req.body.age
+    title: req.body.title,
+    date: req.body.date,
+    url: req.body.url
   })
 
   try {
