@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const router = express.Router()
 
@@ -24,7 +25,7 @@ router.post('/post', (req, res) => {
 })
 
 //Get all Method
-router.get('/getAll', async (req, res) => {
+router.get('/getAll', cors(), async (req, res) => {
   try{
     const data = await Model.find();
     res.json(data)
