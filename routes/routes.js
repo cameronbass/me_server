@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const router = express.Router()
+const Fuse = require('fuse.js')
 
 const Model = require('../model/model')
 
@@ -27,8 +28,17 @@ router.post('/post', (req, res) => {
 //Get all Method
 router.get('/getAll', cors(), async (req, res) => {
   try{
-    const data = await Model.find();
-    res.json(data)
+    const data = await Model.find()
+    // const data = await Model.find({
+    //   // 'title': { '$regex': 'postgres', '$options': 'i' }
+    // });
+    const fuse = new Fuse(data, {
+      keys: ['title']
+    })
+
+    var foundPosts = fuse.search('for')
+
+    res.json(foundPosts)
   }
   catch(error){
       res.status(500).json({message: error.message})

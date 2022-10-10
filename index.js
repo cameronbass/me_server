@@ -9,8 +9,6 @@ const cors = require('cors');
 mongoose.connect(mongoString);
 const database = mongoose.connection;
 
-console.log(database)
-
 database.on('error', (error) => {
     console.log(error)
 })
