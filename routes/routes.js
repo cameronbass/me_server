@@ -25,27 +25,22 @@ router.post('/post', (req, res) => {
   }
 })
 
-//Get all Method
+// Get all Method
 router.get('/getAll', cors(), async (req, res) => {
   try{
     const data = await Model.find()
-    // const data = await Model.find({
-    //   // 'title': { '$regex': 'postgres', '$options': 'i' }
-    // });
-    const fuse = new Fuse(data, {
-      keys: ['title']
-    })
+    const fuse = new Fuse(data, {keys: ['title'] })
 
-    var foundPosts = fuse.search('for')
+    var foundData = req.query.search ? fuse.search(req.query.search) : data
 
-    res.json(foundPosts)
+    res.json(foundData)
   }
   catch(error){
-      res.status(500).json({message: error.message})
+    res.status(500).json({message: error.message})
   }
 })
 
-//Get by ID Method
+// Get by ID Method
 router.get('/getOne/:id', async (req, res) => {
   try{
     const data = await Model.findById(req.params.id);
