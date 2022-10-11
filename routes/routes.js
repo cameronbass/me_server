@@ -8,7 +8,7 @@ const Model = require('../model/model')
 
 module.exports = router;
 
-//Post Method
+// Post Method
 router.post('/post', (req, res) => {
   const data = new Model({
     title: req.body.title,
@@ -29,7 +29,7 @@ router.post('/post', (req, res) => {
 router.get('/getAll', cors(), async (req, res) => {
   try{
     const data = await Model.find()
-    const fuse = new Fuse(data, {keys: ['title'] })
+    const fuse = new Fuse(data, {keys: ['title', 'date'] })
 
     var foundData = req.query.search ? fuse.search(req.query.search) : data
 
