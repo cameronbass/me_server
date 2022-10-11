@@ -26,7 +26,7 @@ router.post('/post', (req, res) => {
 })
 
 // Get all Method
-router.get('/getAll', cors(), async (req, res) => {
+router.get('/posts', cors(), async (req, res) => {
   try{
     const data = await Model.find()
     const fuse = new Fuse(data, {keys: ['title', 'date'] })
