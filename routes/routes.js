@@ -25,15 +25,15 @@ router.post('/post', (req, res) => {
   }
 })
 
-// Get all Method
+// Get all Posts
 router.get('/posts', cors(), async (req, res) => {
   try{
     const data = await Model.find()
     const fuse = new Fuse(data, {keys: ['title', 'date'] })
 
-    var foundData = req.query.search ? fuse.search(req.query.search) : data
+    var foundPosts = req.query.search ? fuse.search(req.query.search) : data
 
-    res.json(foundData)
+    res.json(foundPosts)
   }
   catch(error){
     res.status(500).json({message: error.message})

@@ -24,6 +24,6 @@ app.use('/api', routes)
 
 app.use(cors());
 
-app.listen(3000, () => {
-    console.log(`Server Started at ${3000}`)
+app.listen(() => {
+    console.log(`Server Started`)
 })
