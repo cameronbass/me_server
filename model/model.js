@@ -13,7 +13,11 @@ const dataSchema = new mongoose.Schema(
         date: {
             required: true,
             type: String
-        }
+        },
+        categories: {
+            required: true,
+            type: Array
+        } 
     }
 )
 

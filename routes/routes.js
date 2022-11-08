@@ -27,15 +27,23 @@ router.post('/post', (req, res) => {
 
 // Get all Posts
 router.get('/posts', cors(), async (req, res) => {
-  try{
-    const data = await Model.find()
+  const categories = JSON.parse(req.query.categories)
+
+  try {
+    if (categories.length) {
+      console.log(categories)
+      var data = await Model.find({categories: { $in: categories }})
+    } else {
+      var data = await Model.find()
+    }
+
     const fuse = new Fuse(data, {keys: ['title', 'date'] })
 
     var foundPosts = req.query.search ? fuse.search(req.query.search) : data
 
     res.json(foundPosts)
   }
-  catch(error){
+  catch(error) {
     res.status(500).json({message: error.message})
   }
 })
