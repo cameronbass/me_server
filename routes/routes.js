@@ -4,13 +4,13 @@ const cors = require('cors');
 const router = express.Router()
 const Fuse = require('fuse.js')
 
-const Model = require('../model/model')
+const Post = require('../model/model')
 
 module.exports = router;
 
 // Post Method
 router.post('/post', (req, res) => {
-  const data = new Model({
+  const data = new Post({
     title: req.body.title,
     date: req.body.date,
     url: req.body.url
@@ -31,10 +31,9 @@ router.get('/posts', cors(), async (req, res) => {
 
   try {
     if (categories.length) {
-      console.log(categories)
-      var data = await Model.find({categories: { $in: categories }})
+      var data = await Post.find({categories: { $in: categories }})
     } else {
-      var data = await Model.find()
+      var data = await Post.find()
     }
 
     const fuse = new Fuse(data, {keys: ['title', 'date'] })
