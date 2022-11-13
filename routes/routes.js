@@ -1,11 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const Fuse = require('fuse.js')
+const Post = require('../model/post')
 
 const router = express.Router()
-const Fuse = require('fuse.js')
-
-const Post = require('../model/model')
-
 module.exports = router;
 
 // Post Method
