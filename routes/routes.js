@@ -2,26 +2,45 @@ const express = require('express');
 const cors = require('cors');
 const Fuse = require('fuse.js')
 const Post = require('../model/post')
+const User = require('../model/user')
+const passport = require('passport');
 
 const router = express.Router()
 module.exports = router;
 
-// Post Method
-router.post('/post', (req, res) => {
-  const data = new Post({
-    title: req.body.title,
-    date: req.body.date,
-    url: req.body.url
-  })
+// router.post('/register', (req, res) => {
+//   User.register(new User({ email: req.body.email, username: req.body.username }), req.body.password, function(err, user) {
+//     if (err) {
+//       console.log(err)
+//       // return res.render('register', { account : account });
+//     }
 
-  try {
-    const dataToSave = data.save();
-    res.status(200).json(dataToSave)
-  }
-  catch(error) {
-    res.status(400).json({message: error.message})
-  }
-})
+//     passport.authenticate('local')(req, res, function () {
+//       res.redirect('/');
+//     });
+//   });
+// })
+
+// router.post('/login', passport.authenticate('local'), (req, res) => {
+//     res.redirect('/');
+// })
+
+// router.get("/secret", isLoggedIn, function(req, res){
+//   res.send("success");
+// });
+
+// // Login Form
+// router.get("/login", function(req, res){
+//   res.send("falied")
+// });
+
+// router.post("/login", passport.authenticate("local", { successRedirect: "/api/secret", failureRedirect: "/api/login" }), function(req, res) {});
+
+// // check isLoggedIn
+// function isLoggedIn(req, res, next){
+//   return next();
+//   // res.redirect("/login");
+// }
 
 // Get all Posts
 router.get('/posts', cors(), async (req, res) => {
@@ -42,46 +61,5 @@ router.get('/posts', cors(), async (req, res) => {
   }
   catch(error) {
     res.status(500).json({message: error.message})
-  }
-})
-
-// Get by ID Method
-router.get('/getOne/:id', async (req, res) => {
-  try{
-    const data = await Model.findById(req.params.id);
-    res.json(data)
-  }
-  catch(error){
-    res.status(500).json({message: error.message})
-  }
-})
-
-//Update by ID Method
-router.patch('/update/:id', async (req, res) => {
-  try {
-      const id = req.params.id;
-      const updatedData = req.body;
-      const options = { new: true };
-
-      const result = await Model.findByIdAndUpdate(
-          id, updatedData, options
-      )
-
-      res.send(result)
-  }
-  catch (error) {
-      res.status(400).json({ message: error.message })
-  }
-})
-
-//Delete by ID Method
-router.delete('/delete/:id', async (req, res) => {
-  try {
-      const id = req.params.id;
-      const data = await Model.findByIdAndDelete(id)
-      res.send(`Document with ${data.name} has been deleted..`)
-  }
-  catch (error) {
-      res.status(400).json({ message: error.message })
   }
 })
